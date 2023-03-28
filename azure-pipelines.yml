@@ -68,6 +68,7 @@ steps:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
       **\adf-unit-testing.dll
+    runSettingsFile: '**\tests.runsettings'
     testRunTitle: 'AdfTestRun'
   env:
     AZURE_TENANT_ID: dfb4373b-3e2c-4e81-8443-b058054222a9
