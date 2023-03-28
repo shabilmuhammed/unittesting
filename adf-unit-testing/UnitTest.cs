@@ -33,8 +33,10 @@ namespace adf_unit_testing
         {
             _parameters = new Dictionary<string, object>();
             _parameters.Add("parm_schema", "SalesLT");
+            _parameters.Add("parm_source_schema", "dev");
             _parameters.Add("parm_table", "SalesOrderDetail");
             _parameters.Add("pl_name", "pl_unit_testing");
+
         }
     }
 }
