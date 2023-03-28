@@ -1,0 +1,77 @@
+name: $(BuildDefinitionName).$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include: 
+      - adf/*
+      - adf-unit-testing/*
+
+pool:
+  vmImage: 'windows-2019'
+
+steps:
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo "Structure of work folder of this pipeline:"
+      tree $(Agent.WorkFolder)/1
+
+      echo "Build.ArtifactStagingDirectory:" 
+      echo "$(Build.ArtifactStagingDirectory)"
+
+      echo "Build.BinariesDirectory:" 
+      echo "$(Build.BinariesDirectory)"
+
+      echo "Build.SourcesDirectory:"
+      echo "$(Build.SourcesDirectory)"
+
+- task: AzurePowerShell@4
+  displayName: Publish ADF resources
+  inputs:
+    azureSubscription: devopsconnection
+    azurePowerShellVersion: latestVersion
+    ScriptPath: '$(Build.SourcesDirectory)/adf/publish.ps1'
+    ScriptArguments: -resourceGroupName 'app-grp' -dataFactoryName 'adfunittest' -adfFileRoot '$(System.DefaultWorkingDirectory)/adf' 
+
+- task: NuGetCommand@2
+  displayName: Restore NuGet packages
+  inputs:
+    command: restore
+    feedsToUse: 'select'
+    restoreSolution: 'adf-unit-testing\adf-unit-testing.csproj'
+
+- task: VSBuild@1
+  displayName: 'Build testing project'
+  inputs:
+    solution: 'adf-unit-testing\adf-unit-testing.csproj'
+    configuration: 'Debug'
+    clean: true
+
+- task: AzureCLI@2
+  displayName: 'Set pipeline identity variables'
+  inputs:
+    azureSubscription: 'devopsconnection'
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    addSpnToEnvironment: true
+    inlineScript: |
+      Write-Host "##vso[task.setvariable variable=AzureTenantId;issecret=true]$env:tenantId"
+      Write-Host "##vso[task.setvariable variable=AzureSubscriptionId;issecret=true]$(az account show --query 'id' --output tsv)"
+      Write-Host "##vso[task.setvariable variable=AzureClientId;issecret=true]$env:servicePrincipalId"
+      Write-Host "##vso[task.setvariable variable=AzureClientSecret;issecret=true]$env:servicePrincipalKey"
+- task: VSTest@2
+  displayName: 'Run tests'
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\adf-unit-testing.dll
+    searchFolder: 'adf-unit-testing\adf-unit-testing\bin\Debug\net6.0'
+    testRunTitle: 'AdfTestRun'
+  env:
+    AZURE_TENANT_ID: dfb4373b-3e2c-4e81-8443-b058054222a9
+    AZURE_SUBSCRIPTION_ID: dabd9cc0-2774-4e8f-9655-84de111a8ffe
+    AZURE_CLIENT_ID: f827eff9-2d41-49f9-a28d-cde151cd0521
+    AZURE_CLIENT_SECRET: vyA8Q~o~Nm7tTpKhr1YKky2~pgFz3ZFghUGBkbv7
