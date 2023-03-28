@@ -23,7 +23,7 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": {
-							"value": "@{concat('truncate table ',pipeline().parameters.parm_schema,'.',pipeline().parameters.parm_table)}",
+							"value": "@{concat('truncate table ',pipeline().parameters.parm_source_schema,'.',pipeline().parameters.parm_table)}",
 							"type": "Expression"
 						},
 						"writeBehavior": "insert",
@@ -42,7 +42,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_ASQL_ExternalSystem",
+						"referenceName": "DS_ASQL_AdfTesting",
 						"type": "DatasetReference",
 						"parameters": {
 							"TableSchema": {
@@ -62,7 +62,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"TableSchema": {
-								"value": "@pipeline().parameters.parm_schema",
+								"value": "@pipeline().parameters.parm_source_schema",
 								"type": "Expression"
 							},
 							"TableName": {
@@ -82,6 +82,10 @@
 			"parm_table": {
 				"type": "string",
 				"defaultValue": "CustomerAddress"
+			},
+			"parm_source_schema": {
+				"type": "string",
+				"defaultValue": "dev"
 			}
 		},
 		"annotations": [],
