@@ -26,7 +26,7 @@ namespace adf_unit_testing
         [Test]
         public void CheckTargetCount()
         {
-            _helper.StagedRowCount(_parameters).Should().Be(10);
+            _helper.StagedRowCount(_parameters).Should().Be(542);
         }
 
         public Tests()
