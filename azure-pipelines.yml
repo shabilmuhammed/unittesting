@@ -23,12 +23,6 @@ steps:
     ScriptPath: '$(Build.SourcesDirectory)/adf/publish.ps1'
     ScriptArguments: -resourceGroupName 'app-grp' -dataFactoryName 'adfunittest' -adfFileRoot '$(System.DefaultWorkingDirectory)/adf' 
 
-- task: NuGetCommand@2
-  displayName: Restore NuGet packages
-  inputs:
-    command: restore
-    feedsToUse: 'select'
-    restoreSolution: 'adf-unit-testing\adf-unit-testing.csproj'
 - task: AzurePowerShell@1
   displayName: 'List changed files'
   inputs:
@@ -37,6 +31,12 @@ steps:
       $temp=$files -split ' '
       $count=$temp.Length
       echo "Total changed $count files"
+- task: NuGetCommand@2
+  displayName: Restore NuGet packages
+  inputs:
+    command: restore
+    feedsToUse: 'select'
+    restoreSolution: 'adf-unit-testing\adf-unit-testing.csproj'
 
 - task: VSBuild@1
   displayName: 'Build testing project'
