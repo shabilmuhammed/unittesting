@@ -16,10 +16,11 @@ pool:
 steps:
 
 - powershell: |
-      $files=$(git diff --name-only HEAD~ HEAD)
+      ## get the changed files
+      $files=$(git diff HEAD HEAD~ --name-only)
       $temp=$files -split ' '
       $count=$temp.Length
-      echo "$files"
+      echo "Total changed $count files"
 
 - task: AzurePowerShell@4
   displayName: Publish ADF resources
