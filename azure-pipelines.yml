@@ -1,5 +1,6 @@
 name: $(BuildDefinitionName).$(Date:yyyyMMdd)$(Rev:.r)
 
+
 trigger:
   branches:
     include:
@@ -28,6 +29,11 @@ steps:
     command: restore
     feedsToUse: 'select'
     restoreSolution: 'adf-unit-testing\adf-unit-testing.csproj'
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      git diff-tree --no-commit-id --name-only -r $CI_COMMIT_SHA
 
 - task: VSBuild@1
   displayName: 'Build testing project'
