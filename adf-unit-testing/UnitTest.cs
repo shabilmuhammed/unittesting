@@ -9,6 +9,7 @@ namespace adf_unit_testing
     {
         private datafactoryhelper _helper;
         public IDictionary<string, object> _parameters;
+        public TestContext TestContext { get; set; }
 
         [OneTimeSetUp]
         public async Task WhenPipelineIsRun()
@@ -26,7 +27,11 @@ namespace adf_unit_testing
         [Test]
         public void CheckTargetCount()
         {
-            _helper.StagedRowCount(_parameters).Should().Be(542);
+            IDictionary<string, object> src_params = new Dictionary<string, object>();
+            src_params.Add("parm_schema", _parameters["parm_source_schema"]);
+            src_params.Add("parm_table", _parameters["parm_table"]);
+            var tgt_count = _helper.StagedRowCount(src_params);
+            _helper.StagedRowCount(_parameters).Should().Be(tgt_count);
         }
 
         public Tests()
@@ -34,8 +39,8 @@ namespace adf_unit_testing
             _parameters = new Dictionary<string, object>();
             _parameters.Add("parm_schema", "SalesLT");
             _parameters.Add("parm_source_schema", "dev");
-            _parameters.Add("parm_table", "SalesOrderDetail");
-            _parameters.Add("pl_name", "pl_unit_testing");
+            _parameters.Add("parm_table", TestContext.Parameters["pl_table"]);
+            _parameters.Add("pl_name", TestContext.Parameters["pl_name"]);
 
         }
     }
