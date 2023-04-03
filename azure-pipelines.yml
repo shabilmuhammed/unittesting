@@ -29,11 +29,14 @@ steps:
     command: restore
     feedsToUse: 'select'
     restoreSolution: 'adf-unit-testing\adf-unit-testing.csproj'
-- task: Bash@3
+- task: AzurePowerShell@1
+  displayName: 'List changed files'
   inputs:
-    targetType: 'inline'
-    script: |
-      git diff-tree --no-commit-id --name-only -r $CI_COMMIT_SHA
+    Inline: 
+      $files=$(git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion))
+      $temp=$files -split ' '
+      $count=$temp.Length
+      echo "Total changed $count files"
 
 - task: VSBuild@1
   displayName: 'Build testing project'
