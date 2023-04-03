@@ -13,20 +13,6 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
-- task: CmdLine@2
-  inputs:
-    script: |
-      echo "Structure of work folder of this pipeline:"
-      tree $(Agent.WorkFolder)/1
-
-      echo "Build.ArtifactStagingDirectory:" 
-      echo "$(Build.ArtifactStagingDirectory)"
-
-      echo "Build.BinariesDirectory:" 
-      echo "$(Build.BinariesDirectory)"
-
-      echo "Build.SourcesDirectory:"
-      echo "$(Build.SourcesDirectory)"
 
 - task: AzurePowerShell@4
   displayName: Publish ADF resources
@@ -72,6 +58,7 @@ steps:
       !**\*TestAdapter.dll
       !**\obj\**
       !**\bin\**\ref\**
+    overrideTestrunParameters: pl_name='pl_unit_testin'
     testRunTitle: 'AdfTestRun'
   env:
     AZURE_TENANT_ID: dfb4373b-3e2c-4e81-8443-b058054222a9
