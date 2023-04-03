@@ -15,6 +15,12 @@ pool:
 
 steps:
 
+- powershell: |
+      $files=$(git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion))
+      $temp=$files -split ' '
+      $count=$temp.Length
+      echo "Total changed $count files"
+
 - task: AzurePowerShell@4
   displayName: Publish ADF resources
   inputs:
@@ -23,14 +29,7 @@ steps:
     ScriptPath: '$(Build.SourcesDirectory)/adf/publish.ps1'
     ScriptArguments: -resourceGroupName 'app-grp' -dataFactoryName 'adfunittest' -adfFileRoot '$(System.DefaultWorkingDirectory)/adf' 
 
-- task: AzurePowerShell@1
-  displayName: 'List changed files'
-  inputs:
-    Inline: 
-      $files=$(git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion))
-      $temp=$files -split ' '
-      $count=$temp.Length
-      echo "Total changed $count files"
+
 - task: NuGetCommand@2
   displayName: Restore NuGet packages
   inputs:
