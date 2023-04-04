@@ -30,8 +30,9 @@ steps:
           }
         }
       Write-Host "##vso[task.setvariable variable=changedFile;issecret=true]$name"
+      echo "name = $changedFile"
 
-- script: echo $(changedFile)
+
 
 - task: AzurePowerShell@4
   displayName: Publish ADF resources
