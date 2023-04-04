@@ -1,6 +1,23 @@
 {
 	"name": "ggwp",
 	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "ss",
+					"value": "ss"
+				}
+			}
+		],
+		"variables": {
+			"ss": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
