@@ -14,6 +14,8 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
+- checkout: self
+  fetchDepth: 0
 
 - powershell: |
       ## get the changed files
