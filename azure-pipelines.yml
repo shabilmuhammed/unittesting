@@ -17,8 +17,8 @@ steps:
 
 - powershell: |
       ## get the changed files
-      git fetch --unshallow
-      $files=$(git diff --no-commit-id --name-only HEAD~1 HEAD)
+      git fetch --depth=5
+      $files=$(git diff --no-commit-id --name-only HEAD HEAD^)
       $temp=$files -split ' '
       $count=$temp.Length
       echo "$files"
