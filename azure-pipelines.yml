@@ -15,7 +15,8 @@ steps:
       ## git fetch --depth=5
       $files=$(git diff --no-commit-id --name-only HEAD HEAD^)
       $temp=$files -split '/pipeline/'
-      echo "$files.GetType()"
+      ##echo "$files"
+      echo $files.GetType()
 
 - task: AzurePowerShell@4
   displayName: Publish ADF resources
