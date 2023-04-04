@@ -6,8 +6,6 @@ trigger: none
 pool:
   vmImage: 'windows-2019'
 
-variables:
-- name: changedFile
 
 steps:
 - checkout: self
@@ -29,7 +27,7 @@ steps:
             $name = $name.Replace(".json","")
           }
         }
-      Write-Host "##vso[task.setvariable variable=changedFile;issecret=true]$name"
+      Write-Host "##vso[task.setvariable variable=changedFile]$name"
       echo "name = $changedFile"
 
 
@@ -79,7 +77,7 @@ steps:
       !**\*TestAdapter.dll
       !**\obj\**
       !**\bin\**\ref\**
-    overrideTestrunParameters: -pl_name pl_unit_testing -pl_table SalesOrderDetail
+    overrideTestrunParameters: -pl_name $(changedFile) -pl_table SalesOrderDetail
     testRunTitle: 'AdfTestRun'
   env:
     AZURE_TENANT_ID: dfb4373b-3e2c-4e81-8443-b058054222a9
