@@ -17,10 +17,10 @@ steps:
 
 - powershell: |
       ## get the changed files
-      $files=$(git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion))
+      $files=$(git diff --no-commit-id --name-only HEAD~1 HEAD)
       $temp=$files -split ' '
       $count=$temp.Length
-      echo "Total changed $count files"
+      echo "$files"
 
 - task: AzurePowerShell@4
   displayName: Publish ADF resources
