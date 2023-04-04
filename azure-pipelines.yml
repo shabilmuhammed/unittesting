@@ -22,7 +22,7 @@ steps:
       For ($i=0; $i -lt $temp.Length; $i++)
         {
 
-          if ($temp[i] -like 'pl_*') 
+          if ($temp[$i] -like 'pl_*') 
           {
             $name=$temp[$i]
             $name = $name.Replace(".json","")
