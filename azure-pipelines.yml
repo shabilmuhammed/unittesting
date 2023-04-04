@@ -17,7 +17,7 @@ steps:
 
 - powershell: |
       ## get the changed files
-      $files=$(git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion))
+      $files=$(git diff --name-only origin/main)
       $temp=$files -split ' '
       $count=$temp.Length
       echo "Total changed $count files"
