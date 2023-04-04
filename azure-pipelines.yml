@@ -6,18 +6,19 @@ trigger: none
 pool:
   vmImage: 'windows-2019'
 
+variables:
+- name: changedFile
+
 steps:
 - checkout: self
   fetchDepth: 0
 
+
 - powershell: |
       ## get the changed files
-      ## git fetch --depth=5
       $files=$(git diff --no-commit-id --name-only HEAD HEAD^)
       $temp=$files -split '/pipeline/'
       $count=$temp.Length
-      echo $temp
-      echo "Total changed $count files"
       $name=""
       For ($i=0; $i -lt $temp.Length; $i++)
         {
@@ -28,7 +29,11 @@ steps:
             $name = $name.Replace(".json","")
           }
         }
-      echo $name
+      Write-Host "##vso[task.setvariable variable=changedFile;issecret=true]$name"
+
+- script: |
+    echo $(changedFile)
+    displayName: ggwp
 
 - task: AzurePowerShell@4
   displayName: Publish ADF resources
