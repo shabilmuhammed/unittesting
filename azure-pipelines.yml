@@ -14,13 +14,16 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
+- checkout: self
+  fetchDepth: 0
 
 - powershell: |
       ## get the changed files
-      $files=$(git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion))
+      ## git fetch --depth=5
+      $files=$(git diff --no-commit-id --name-only HEAD HEAD^)
       $temp=$files -split ' '
       $count=$temp.Length
-      echo "Total changed $count files"
+      echo "$files"
 
 - task: AzurePowerShell@4
   displayName: Publish ADF resources
