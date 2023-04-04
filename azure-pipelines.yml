@@ -27,7 +27,7 @@ steps:
             $name = $name.Replace(".json","")
           }
         }
-      Write-Host "##vso[task.setvariable variable=changedFile]$(name)"
+      Write-Host "##vso[task.setvariable variable=changedFile]$name"
 
 
 
