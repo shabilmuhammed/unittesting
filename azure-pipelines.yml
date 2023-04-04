@@ -14,8 +14,10 @@ steps:
       ## get the changed files
       ## git fetch --depth=5
       $files=$(git diff --no-commit-id --name-only HEAD HEAD^)
-      $temp=$files -split '/pipeline/'[1]
+      $temp=$files -split '/pipeline/'
+      $count=$temp.Length
       echo $temp
+      echo "Total changed $count files"
 
 - task: AzurePowerShell@4
   displayName: Publish ADF resources
