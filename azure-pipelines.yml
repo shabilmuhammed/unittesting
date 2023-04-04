@@ -27,8 +27,8 @@ steps:
             $name = $name.Replace(".json","")
           }
         }
-      Write-Host "##vso[task.setvariable variable=changedFile]$name"
-      echo "name = $changedFile"
+      Write-Host "##vso[task.setvariable variable=changedFile]$(name)"
+      echo "pipeline to be deployed = $name"
 
 
 
