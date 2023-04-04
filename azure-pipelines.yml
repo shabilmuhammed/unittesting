@@ -18,6 +18,17 @@ steps:
       $count=$temp.Length
       echo $temp
       echo "Total changed $count files"
+      $name=""
+      For ($i=0; $i -lt $temp.Length; $i++)
+        {
+
+          if ($temp[i] -like 'pl_*') 
+          {
+            $name=$temp[$i]
+            $name = $name.Replace(".json","")
+          }
+        }
+      echo $name
 
 - task: AzurePowerShell@4
   displayName: Publish ADF resources
