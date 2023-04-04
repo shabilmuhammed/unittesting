@@ -1,14 +1,7 @@
 name: $(BuildDefinitionName).$(Date:yyyyMMdd)$(Rev:.r)
 
 
-trigger:
-  branches:
-    include:
-      - main
-  paths:
-    include: 
-      - adf/*
-      - adf-unit-testing/*
+trigger: none
 
 pool:
   vmImage: 'windows-2019'
