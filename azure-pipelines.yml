@@ -27,6 +27,14 @@ steps:
             $name = $name.Replace(".json","")
           }
         }
+      if ($name.Length -gt 0)
+      {
+        Write-Host "##vso[task.setvariable variable=condtion]true"
+      }
+      else
+      {
+        Write-Host "##vso[task.setvariable variable=condtion]false"
+      }
       Write-Host "##vso[task.setvariable variable=changedFile]$name"
 
 
@@ -67,6 +75,7 @@ steps:
       Write-Host "##vso[task.setvariable variable=AzureClientId;issecret=true]$env:servicePrincipalId"
       Write-Host "##vso[task.setvariable variable=AzureClientSecret;issecret=true]$env:servicePrincipalKey"
 - task: VSTest@2
+  condition: $(condtion)
   displayName: 'Run tests'
   inputs:
     testSelector: 'testAssemblies'
