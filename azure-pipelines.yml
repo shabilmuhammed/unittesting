@@ -78,7 +78,7 @@ steps:
       Write-Host "##vso[task.setvariable variable=AzureClientId;issecret=true]$env:servicePrincipalId"
       Write-Host "##vso[task.setvariable variable=AzureClientSecret;issecret=true]$env:servicePrincipalKey"
 - task: VSTest@2
-  condition: and(succeeded(), eq($[variables.condition], 'true'))
+  condition: and(succeeded(), eq(variables.condition, true))
   displayName: 'Run tests'
   inputs:
     testSelector: 'testAssemblies'
