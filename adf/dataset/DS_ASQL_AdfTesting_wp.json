@@ -1,5 +1,5 @@
 {
-	"name": "DS_ASQL_AdfTesting_gg",
+	"name": "DS_ASQL_AdfTesting_wp",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adftesting",
