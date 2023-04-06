@@ -11,7 +11,7 @@ pool:
 
 steps:
 - bash: |
-    git push --prune https://shabilmuhammed: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@github.com/unittesting \
+    git push --prune https://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@github.com/shabilmuhammed/unittesting.git \
         +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
   displayName: 'Copy to Github'
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
