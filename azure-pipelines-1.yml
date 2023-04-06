@@ -15,7 +15,7 @@ steps:
   fetchDepth: 0
 
 - bash: |
-    git push --prune https://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@github.com/shabilmuhammed/unittesting.git \
+    git push --prune https://$(PAT)@github.com/shabilmuhammed/unittesting.git \
         +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
   displayName: 'Copy to Github'
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
