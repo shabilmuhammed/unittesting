@@ -10,6 +10,10 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+
+- checkout: self
+  fetchDepth: 0
+
 - bash: |
     git push --prune https://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@github.com/shabilmuhammed/unittesting.git \
         +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
