@@ -16,13 +16,13 @@ steps:
       $files=$(git diff --no-commit-id --name-only HEAD HEAD^)
       $temp=$files -split '/pipeline/'
       $count=$temp.Length
-      $name=New-Object Collections.Generic.List[String]
+      $name=""
       For ($i=0; $i -lt $temp.Length; $i++)
         {
 
           if ($temp[$i] -like 'pl_*') 
           {
-            $name.Add($temp[$i].Replace(".json",""))
+            $name=$name+$temp[i]+" "
           }
         }
       echo "This is the final result: $name"
