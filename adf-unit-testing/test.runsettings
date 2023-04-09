@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <RunSettings>
 	<TestRunParameters>
-		<Parameter name="pl_name" value="pl_unit_testing" />
+		<Parameter name="pl_name" value="pl_list_test|pl_new_unit_test"/>
 		<Parameter name="pl_table" value="SalesOrderDetail" />
 	</TestRunParameters>
 </RunSettings>

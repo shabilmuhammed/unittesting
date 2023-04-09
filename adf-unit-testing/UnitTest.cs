@@ -14,8 +14,15 @@ namespace adf_unit_testing
         [OneTimeSetUp]
         public async Task WhenPipelineIsRun()
         {
-            _helper = new datafactoryhelper();
-            await _helper.RunPipeline(_parameters["pl_name"].ToString(),_parameters);
+            if (_parameters["pl_name"].ToString() != "pl_new_unit_test")
+            {
+                Assert.Ignore("unmatched pipeline");
+            }
+            else
+            {
+                _helper = new datafactoryhelper();
+                await _helper.RunPipeline(_parameters["pl_name"].ToString(), _parameters);
+            }
         }
 
         [Test]
@@ -40,7 +47,20 @@ namespace adf_unit_testing
             _parameters.Add("parm_schema", "SalesLT");
             _parameters.Add("parm_source_schema", "dev");
             _parameters.Add("parm_table", TestContext.Parameters["pl_table"]);
-            _parameters.Add("pl_name", TestContext.Parameters["pl_name"]);
+
+            var pl_names = TestContext.Parameters["pl_name"].Split("|");
+
+            if (pl_names.Length > 0)
+            {
+                foreach (var name in pl_names)
+                {
+                    if (name.Contains("pl_new_unit_test"))
+                    {
+                        _parameters.Add("pl_name", "pl_new_unit_test");
+                    }
+                }
+                
+            }                 
 
         }
     }
