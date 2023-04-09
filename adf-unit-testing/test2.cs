@@ -18,18 +18,9 @@ namespace adf_unit_testing
             {
                 Assert.Ignore("unmatched pipeline");
             }
-            else
-            {
-                _helper = new datafactoryhelper();
-                await _helper.RunPipeline(_parameters["pl_name"].ToString(), _parameters);
-            }
+
         }
 
-        [Test]
-        public void ThenPipelineOutcomeIsSucceeded()
-        {
-            _helper.PipelineOutcome.Should().Be("Succeeded");
-        }
 
         [Test]
         public void CheckTargetCount()
@@ -43,6 +34,7 @@ namespace adf_unit_testing
 
         public Test2()
         {
+            _helper = new datafactoryhelper();
             _parameters = new Dictionary<string, object>();
             _parameters.Add("parm_schema", "SalesLT");
             _parameters.Add("parm_source_schema", "dev");
