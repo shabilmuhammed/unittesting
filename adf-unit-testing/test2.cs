@@ -1,11 +1,11 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace adf_unit_testing 
+namespace adf_unit_testing
 {
-    public class Tests : datafactoryhelper
+    public class Test2 : datafactoryhelper
     {
         private datafactoryhelper _helper;
         public IDictionary<string, object> _parameters;
@@ -14,7 +14,7 @@ namespace adf_unit_testing
         [OneTimeSetUp]
         public async Task WhenPipelineIsRun()
         {
-            if (_parameters["pl_name"].ToString() != "pl_new_unit_test")
+            if (_parameters["pl_name"].ToString() != "pl_list_test")
             {
                 Assert.Ignore("unmatched pipeline");
             }
@@ -41,7 +41,7 @@ namespace adf_unit_testing
             _helper.StagedRowCount(_parameters).Should().Be(tgt_count);
         }
 
-        public Tests()
+        public Test2()
         {
             _parameters = new Dictionary<string, object>();
             _parameters.Add("parm_schema", "SalesLT");
@@ -54,13 +54,13 @@ namespace adf_unit_testing
             {
                 foreach (var name in pl_names)
                 {
-                    if (name.Contains("pl_new_unit_test"))
+                    if (name.Contains("pl_list_test"))
                     {
-                        _parameters.Add("pl_name", "pl_new_unit_test");
+                        _parameters.Add("pl_name", "pl_list_test");
                     }
                 }
-                
-            }                 
+
+            }
 
         }
     }
