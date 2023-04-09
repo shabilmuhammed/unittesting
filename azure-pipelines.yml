@@ -22,7 +22,7 @@ steps:
 
           if ($temp[$i] -like 'pl_*') 
           {
-            $name=$name + $temp[$i].ToString() + " "
+            $name=$name + $temp[$i].Replace(".json","") + " "
           }
         }
       echo "This is the final result: $name"
