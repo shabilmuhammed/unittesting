@@ -1,9 +1,9 @@
 {
-	"name": "pl_new_unit_test",
+	"name": "pl_list_test",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data12",
+				"name": "Copy data10",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
