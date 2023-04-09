@@ -1,0 +1,95 @@
+{
+	"name": "pl_list_test",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data10",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": {
+							"value": "@{concat('truncate table ',pipeline().parameters.parm_source_schema,'.',pipeline().parameters.parm_table)}",
+							"type": "Expression"
+						},
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_ASQL_AdfTesting",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableSchema": {
+								"value": "@pipeline().parameters.parm_schema",
+								"type": "Expression"
+							},
+							"TableName": {
+								"value": "@pipeline().parameters.parm_table",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_ASQL_AdfTesting",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableSchema": {
+								"value": "@pipeline().parameters.parm_source_schema",
+								"type": "Expression"
+							},
+							"TableName": {
+								"value": "@pipeline().parameters.parm_table",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"parm_schema": {
+				"type": "string",
+				"defaultValue": "SalesLT"
+			},
+			"parm_table": {
+				"type": "string",
+				"defaultValue": "CustomerAddress"
+			},
+			"parm_source_schema": {
+				"type": "string",
+				"defaultValue": "dev"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-03-25T11:44:30Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
