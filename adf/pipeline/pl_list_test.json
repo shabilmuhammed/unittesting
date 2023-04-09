@@ -81,7 +81,7 @@
 			},
 			"parm_table": {
 				"type": "string",
-				"defaultValue": "CustomerAddress"
+				"defaultValue": "SalesOrderDetail"
 			},
 			"parm_source_schema": {
 				"type": "string",
