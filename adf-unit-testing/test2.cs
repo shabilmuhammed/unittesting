@@ -49,17 +49,22 @@ namespace adf_unit_testing
             _parameters.Add("parm_table", TestContext.Parameters["pl_table"]);
 
             var pl_names = TestContext.Parameters["pl_name"].Split("|");
-
+            var foundFlag = 0;
             if (pl_names.Length > 0)
             {
                 foreach (var name in pl_names)
                 {
                     if (name.Contains("pl_list_test"))
                     {
+                        foundFlag = 1;
                         _parameters.Add("pl_name", "pl_list_test");
                     }
                 }
 
+            }
+            if (foundFlag == 0)
+            {
+                _parameters.Add("pl_name", "no_pl");
             }
 
         }
