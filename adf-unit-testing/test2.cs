@@ -46,7 +46,7 @@ namespace adf_unit_testing
             {
                 foreach (var name in pl_names)
                 {
-                    if (name.Contains("pl_list_test"))
+                    if (name=="pl_list_test")
                     {
                         foundFlag = 1;
                         _parameters.Add("pl_name", "pl_list_test");
