@@ -16,16 +16,16 @@ steps:
       $files=$(git diff --no-commit-id --name-only HEAD HEAD^)
       $temp=$files -split '/pipeline/'
       $count=$temp.Length
-      $name=""
+      $name=New-Object Collections.Generic.List[String]
       For ($i=0; $i -lt $temp.Length; $i++)
         {
 
           if ($temp[$i] -like 'pl_*') 
           {
-            $name=$temp[$i]
-            $name = $name.Replace(".json","")
+            $name.Add($temp[$i].Replace(".json",""))
           }
         }
+      echo "This is the final result: $name"
       if ($name.Length -gt 0)
       {
         Write-Host "##vso[task.setvariable variable=condition]true"
