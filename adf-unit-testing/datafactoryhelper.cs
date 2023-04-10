@@ -20,13 +20,13 @@ namespace adf_unit_testing
             PipelineOutcome = "Unknown";
 
             // authenticate against Azure
-            var context = new AuthenticationContext("https://login.windows.net/" + "dfb4373b-3e2c-4e81-8443-b058054222a9");
-            var cc = new ClientCredential("f827eff9-2d41-49f9-a28d-cde151cd0521", "vyA8Q~o~Nm7tTpKhr1YKky2~pgFz3ZFghUGBkbv7");
+            var context = new AuthenticationContext("https://login.windows.net/" + "TENANT_ID");
+            var cc = new ClientCredential("CLIENT_ID", "CLIENT_SECRET");
             var authResult = await context.AcquireTokenAsync("https://management.azure.com/", cc);
 
             // prepare ADF client
             var cred = new TokenCredentials(authResult.AccessToken);
-            using (var adfClient = new DataFactoryManagementClient(cred) { SubscriptionId = "dabd9cc0-2774-4e8f-9655-84de111a8ffe" })
+            using (var adfClient = new DataFactoryManagementClient(cred) { SubscriptionId = "SUBSCRIPTION" })
             {
                 var adfName = "adfunittest";
                 var rgName = "app-grp";
