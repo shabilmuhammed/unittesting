@@ -11,7 +11,7 @@ namespace adf_unit_testing
     {
         public int RowCount(string tableName)
         {
-            using (var conn = new SqlConnection("Server=tcp:shabilsqlserver.database.windows.net,1433;Initial Catalog=AdfTesting;Persist Security Info=False;User ID=adminusr;Password=Azure@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            using (var conn = new SqlConnection("CONNECTION_STRING"))
             {
                 conn.Open();
                 using (var cmd = new SqlCommand($"SELECT COUNT(*) FROM {tableName}", conn))
